@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////
 Trenowanie Wabbita:
-vw datamodel_rabbit_repaired.txt -c --passes 25 -f rabbit.model
+vw datamodel_rabbit_repaired.txt --oaa 4 -c --passes 1000 -l 10 --holdout_off -f rabbit.model
 //////////////////////////////////////////////////////////////
 
 
