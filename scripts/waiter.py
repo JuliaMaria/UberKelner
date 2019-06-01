@@ -20,6 +20,7 @@ from scripts.matrix import *
 from scripts.wall import *
 
 from vowpalwabbit import pyvw
+import os
 
 # set recursion limit:
 sys.setrecursionlimit(1500)
@@ -590,18 +591,28 @@ class Waiter (pygame.sprite.Sprite):
         # get proposed solution of current state from model
 
         moves = {
-            '1': 'W',
-            '2': 'S',
-            '3': 'A',
-            '4': 'D'
+            1: 'W',
+            2: 'S',
+            3: 'A',
+            4: 'D'
         }
 
-        model = '../data/rabbit.model'
-        vw = pyvw.vw(i=model)
-        ex = vw.example(rabbit_standard)
-        result = round(vw.predict(ex))
+        model = './data/rabbit.model'
+        input = './data/rabbit_input.txt'
+        output = './data/rabbit_result.txt'
+
+        rabbit_standard = "|{}".format(rabbit_standard)
+
+        with open(input, 'w') as myfile:
+            myfile.write(rabbit_standard)
+
+        run_rabbit = 'vw -i {} -t {} -p {} --quiet'.format(model, input, output)
+        os.system(run_rabbit)
+
+        with open(output, 'r') as myfile:
+            result = int(round(float(myfile.readline())))
+        result = moves.get(result)
         print(result)
-        final_result = moves.get(result)
 
         # set response to path
         self.path = [[0, 0]]  # this has to be double list!
