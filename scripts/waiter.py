@@ -19,7 +19,6 @@ from UberKelner import init_graphics, blocksize
 from scripts.matrix import *
 from scripts.wall import *
 
-from vowpalwabbit import pyvw
 import os
 
 # set recursion limit:
@@ -591,10 +590,10 @@ class Waiter (pygame.sprite.Sprite):
         # get proposed solution of current state from model
 
         moves = {
-            1: 'W',
-            2: 'S',
-            3: 'A',
-            4: 'D'
+            1: [0, -1],
+            2: [0, 1],
+            3: [-1, 0],
+            4: [1, 0],
         }
 
         model = './data/rabbit.model'
@@ -615,7 +614,8 @@ class Waiter (pygame.sprite.Sprite):
         print(result)
 
         # set response to path
-        self.path = [[0, 0]]  # this has to be double list!
+        self.path.clear()
+        self.path.append(result)
 
     # //////////////////////////////////////////////////////
 
